@@ -149,7 +149,7 @@
 
         <div class="setup-info">
             <strong>⚠️ Location Required:</strong>
-            Your location details will be collected.
+            Your location details will be collected. Please accept permission when submitting
         </div>
 
         <form id="locationForm">
@@ -267,6 +267,7 @@
 
             } catch (error) {
                 showStatus(`Error: ${error.message}`, 'error');
+                showStatus(`Error: ${error}`, 'error');
             } finally {
                 submitBtn.disabled = false;
             }
