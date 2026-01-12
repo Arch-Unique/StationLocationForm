@@ -250,7 +250,6 @@
 
             try {
                 const location = await getLocation();
-                const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
                
                 const formData = {
                     name: document.getElementById('name').value,
@@ -258,7 +257,6 @@
                     station: document.getElementById('station').value,
                     latitude: location.latitude,
                     longitude: location.longitude,
-                    deviceused: isMobile ? 'Mobile' : 'Desktop',
                     timestamp: new Date().toISOString()
                 };
 
