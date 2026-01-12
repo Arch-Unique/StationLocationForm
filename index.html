@@ -225,6 +225,31 @@
             });
         }
 
+        async function getLocationDetails(latitude, longitude) {
+            try {
+                const response = await fetch(
+                    `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=10&addressdetails=1`,
+                    {
+                        headers: {
+                            'User-Agent': 'LocationFormApp/1.0'
+                        }
+                    }
+                );
+                const data = await response.json();
+                
+                return {
+                    state: data.address.state || data.address.region || 'Unknown',
+                    country: data.address.country || 'Unknown'
+                };
+            } catch (error) {
+                console.error('Error getting location details:', error);
+                return {
+                    state: 'Unknown',
+                    country: 'Unknown'
+                };
+            }
+        }
+
         async function submitToGoogleSheets(data) {
             const response = await fetch(SCRIPT_URL, {
                 method: 'POST',
@@ -250,6 +275,12 @@
 
             try {
                 const location = await getLocation();
+
+                showStatus('Getting location details...', 'info');
+                const locationDetails = await getLocationDetails(location.latitude, location.longitude);
+                
+                // Detect if mobile device
+                const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
                
                 const formData = {
                     name: document.getElementById('name').value,
@@ -257,6 +288,9 @@
                     station: document.getElementById('station').value,
                     latitude: location.latitude,
                     longitude: location.longitude,
+                    state: locationDetails.state,
+                    country: locationDetails.country,
+                    deviceused: isMobile ? "Mobile" : "Desktop",
                     timestamp: new Date().toISOString()
                 };
 
