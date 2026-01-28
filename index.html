@@ -241,6 +241,10 @@
                 <input type="text" id="station" name="station" required>
             </div>
             <div class="form-group">
+                <label for="stationcode">Station Code</label>
+                <input type="text" id="stationcode" name="stationcode">
+            </div>
+            <div class="form-group">
                 <label for="name">Station Address *</label>
                 <input type="text" id="address" name="address" required>
             </div>
@@ -382,6 +386,7 @@
                     name: document.getElementById('code').value,
                     phone: document.getElementById('phone').value,
                     station: document.getElementById('station').value,
+                    stationcode: document.getElementById('stationcode').value,
                     address: document.getElementById('address').value,
                     latitude: location.latitude,
                     longitude: location.longitude,
